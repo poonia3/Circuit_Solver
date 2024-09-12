@@ -115,7 +115,14 @@ std::istream& operator>>(std::istream& input, complex_number& c) {
     std::vector<std::string> parts = split(s, "+", "-");
     c.imag = 0;
     c.real = 0;
+    for(int i = 0; i < parts.size()-1; i++){
+        if(parts[i].find("e") != std::string::npos && (parts[i+1][0] == '+' || parts[i+1][0] == '-')){
+            parts[i] = parts[i] + parts[i+1];
+            parts.erase(parts.begin()+i+1);
+        }
+    }
     for(int i = 0; i < parts.size(); i++){
+        
         if(parts[i].find("i") == std::string::npos){
             std::istringstream(parts[i]) >> c.real;
         }
